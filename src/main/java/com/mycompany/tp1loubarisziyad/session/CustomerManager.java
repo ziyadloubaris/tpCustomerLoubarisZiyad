@@ -21,31 +21,20 @@ import javax.persistence.Query;
 @Stateless
 public class CustomerManager {
 
+
     @PersistenceContext(unitName = "customerPU")
     private EntityManager em;
-    @Resource
-    private javax.transaction.UserTransaction utx;
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
-    public List<Customer> getAllCustomers() {  
-        Query query = em.createNamedQuery("Customer.findAll");
-    
-        return query.getResultList();  
-    }  
-        
+    public List<Customer> getAllCustomers() {
+       Query query = em.createNamedQuery("Customer.findAll");
+       return query.getResultList();
+    }
+
     public Customer update(Customer customer) {
-      return em.merge(customer);  
-    } 
+       return em.merge(customer);
+    }
 
     public void persist(Customer customer) {
-        try {
-            utx.begin();
-            em.persist(customer);
-            utx.commit();
-        } catch (Exception e) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", e);
-            throw new RuntimeException(e);
-        }
+       em.persist(customer);
     }
 }
