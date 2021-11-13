@@ -21,12 +21,12 @@ import org.primefaces.util.LangUtils;
 @Named(value = "customerMBean")
 @ViewScoped
 public class CustomerMBean implements Serializable {
-    
+   
+    private List<Customer> customerList;
+ 
     @EJB
     private CustomerManager customerManager;
-    private boolean globalFilterOnly;    
-    private List<Customer> customerList;
-private List<Customer> filteredCustomers1;
+   
     /**
      * Creates a new instance of CustomerMBean
      */
@@ -39,37 +39,5 @@ private List<Customer> filteredCustomers1;
     }
     return customerList;
   }  
-    public boolean globalFilterFunction(Object value, Object filter, Locale locale) {
-        String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
-        if (!LangUtils.isNotBlank(filterText)) {
-            return true;
-        }
-        int filterInt = getInteger(filterText);
-
-        Customer customer = (Customer) value;
-        return customer.getName().toLowerCase().contains(filterText)
-                || customer.getCity().toLowerCase().contains(filterText)
-                || customer.getAddressline1().toLowerCase().contains(filterText)
-                || customer.getAddressline2().toString().toLowerCase().contains(filterText)
-                || customer.getEmail().toLowerCase().contains(filterText)
-                || customer.getPhone().contains(filterText);
-    }
-     public boolean isGlobalFilterOnly() {
-        return globalFilterOnly;
-    }
-
-    public void setGlobalFilterOnly(boolean globalFilterOnly) {
-        this.globalFilterOnly = globalFilterOnly;
-    }
-    
-    public void toggleGlobalFilter() {
-        setGlobalFilterOnly(!isGlobalFilterOnly());
-    }
-        public List<Customer> getFilteredCustomers1() {
-        return filteredCustomers1;
-    }
-
-    public void setFilteredCustomers1(List<Customer> filteredCustomers1) {
-        this.filteredCustomers1 = filteredCustomers1;
-    }
+   
 }
